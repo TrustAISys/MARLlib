@@ -71,7 +71,11 @@ def q_value_mixing(policy: Policy,
     mask_flag = custom_config["mask_flag"]
 
     if mask_flag:
-        action_mask_dim = custom_config["space_act"].n
+        action_space = custom_config["space_act"]
+        if hasattr(action_space, "n"):
+            action_mask_dim = action_space.n
+        elif hasattr(action_space, "nvec"):
+            action_mask_dim = sum(action_space.nvec)
     else:
         action_mask_dim = 0
 

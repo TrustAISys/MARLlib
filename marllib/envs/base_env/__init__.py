@@ -24,11 +24,11 @@ ENV_REGISTRY = {}
 
 try:
     from marllib.envs.base_env.gymnasium_mamujoco import RLlibGymnasiumRoboticsMAMujoco
+
     ENV_REGISTRY["gymnasium_mamujoco"] = RLlibGymnasiumRoboticsMAMujoco
 
 except Exception as e:
     ENV_REGISTRY["gymnasium_mamujoco"] = str(e)
-
 
 try:
     from marllib.envs.base_env.mpe import RLlibMPE
@@ -36,7 +36,6 @@ try:
     ENV_REGISTRY["mpe"] = RLlibMPE
 except Exception as e:
     ENV_REGISTRY["mpe"] = str(e)
-
 
 try:
     from marllib.envs.base_env.gymnasium_mpe import RLlibMPE_Gymnasium
@@ -51,9 +50,6 @@ try:
     ENV_REGISTRY["mamujoco"] = RLlibMAMujoco
 except Exception as e:
     ENV_REGISTRY["mamujoco"] = str(e)
-
-
-
 
 try:
     from marllib.envs.base_env.smac import RLlibSMAC
@@ -110,6 +106,13 @@ try:
     ENV_REGISTRY["metadrive"] = RLlibMetaDrive
 except Exception as e:
     ENV_REGISTRY["metadrive"] = str(e)
+
+try:
+    from marllib.envs.base_env.cmad import RLlibCmad
+
+    ENV_REGISTRY["cmad"] = RLlibCmad
+except Exception as e:
+    ENV_REGISTRY["cmad"] = str(e)
 
 try:
     from marllib.envs.base_env.mate import RLlibMATE

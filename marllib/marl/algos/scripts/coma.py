@@ -37,7 +37,11 @@ def restore_model(restore: Dict, exp: Dict):
         with open(restore["params_path"], 'r') as JSON:
             raw_exp = json.load(JSON)
             raw_exp = raw_exp["model"]["custom_model_config"]['model_arch_args']
-            check_exp = exp['model_arch_args']
+            try:
+                check_exp = exp["model"]["custom_model_config"]['model_arch_args']
+            except:
+                check_exp = exp["model_arch_args"]
+
             if check_exp != raw_exp:
                 raise ValueError("is not using the params required by the checkpoint model")
         model_path = restore["model_path"]
@@ -107,8 +111,12 @@ def run_coma(model: Any, exp: Dict, run: Dict, env: Dict,
     model_path = restore_model(restore, exp)
     results = tune.run(COMATrainer,
                        name=RUNNING_NAME,
+                       resume=exp["resume"],
                        checkpoint_at_end=exp['checkpoint_end'],
                        checkpoint_freq=exp['checkpoint_freq'],
+                       keep_checkpoints_num=exp.get('keep_checkpoints_num', None),
+                       checkpoint_score_attr=exp.get('checkpoint_score_attr', None),
+                       max_failures=exp['max_failures'],
                        restore=model_path,
                        stop=stop,
                        config=config,

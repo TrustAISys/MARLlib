@@ -22,19 +22,23 @@
 
 # ray/rllib config
 
-local_mode: True # True for debug mode only
+local_mode: False # True for debug mode only
 share_policy: "group" #  individual(separate) / group(division) / all(share)
-evaluation_interval: 50 # evaluate model every 10 training iterations
+evaluation_interval: 0 # evaluate model every 10 training iterations, 0 to disable
 framework: "torch"
 num_workers: 1 # thread number
 num_gpus: 1 # gpu to use
 num_cpus_per_worker: 1 # cpu allocate to each worker
 num_gpus_per_worker: 0 # gpu allocate to each worker
-checkpoint_freq: 100 # save model every 100 training iterations
+checkpoint_freq: 20 # save model every n training iterations
 checkpoint_end: True # save model at the end of the exp
+keep_checkpoints_num: 10 # max number of checkpoints to keep, if not None, need to provide a metric "checkpoint_score_attr"
+checkpoint_score_attr: "episode_reward_mean" # metric to use for checkpoint comparison
+resume: False # resume the previous experiment, can't be true if specified restore model
 restore_path: {"model_path": "", "params_path": ""} # load model and params path: 1. resume exp 2. rendering policy
 stop_iters: 9999999 # stop training at this iteration
 stop_timesteps: 2000000 # stop training at this timesteps
 stop_reward: 999999 # stop training at this reward
+max_failures: -1 # resume experiment by restart. -1 means infinite retry, default to non-retry
 seed: 321 # ray seed
-local_dir: "" #  all results placed
+local_dir: "~/ray_results" #  all results placed

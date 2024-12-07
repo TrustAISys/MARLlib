@@ -1,0 +1,15 @@
+env: cmad
+
+env_args:
+  map_name: "Town01" # | "default" | "custom"
+  use_only_semantic: true
+  use_only_camera: false
+  pad_action_space: false
+  concat_action_space: false
+
+# Custom scenario support is currently removed
+
+mask_flag: False
+global_state_flag: False
+opp_action_in_cc: False
+agent_level_batch_update: False
